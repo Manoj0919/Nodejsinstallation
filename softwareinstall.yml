@@ -3,17 +3,33 @@ become: true
 vars:
   softwarenames:
     - git 
-    - java
-    - sonarqube
     - nginx
 tasks:
-  -name: Install softwares
+  -name: Install_softwares
     apt: 
-      name: "{{item}}""
-      state: true
-    with_items: "{{softwarenames}}" 
+      name: "{{item}}"
+      state: present
+      loop: "{{softwarenames}}" 
   tags:
-   - Installnginx
+   - Installsoftwares
+  -name: install java
+   ssh:
+   user: amazonlinux
+   command:
+    cd /opt
+    sudo  wget https://download.java.net/openjdk/jdk17.0.0.1/ri/openjdk-17.0.0.1+2_linux-x64_bin.tar.gz
+    sudo tar -xvzf openjdk-17.0.0.1+2_linux-x64_bin.tar.gz
+    sudo rm openjdk-17.0.0.1+2_linux-x64_bin.tar.gz
+    sudo mv jdk-17.0.0.1  java-17
+    sudo ln -s /opt/java-17/bin/java /usr/bin/java
+    echo 'export JAVA_HOME=/opt/java-17' | sudo tee -a /etc/profile
+    echo 'export PATH=$PATH:$JAVA_HOME/bin' | sudo tee -a /etc/profile
+    source /etc/profile
+
+    java -version
+  tags:
+    - install java
+  
   
 
 
