@@ -1,0 +1,19 @@
+-hosts: all
+become: true
+vars:
+  softwarenames:
+    - git 
+    - java
+    - sonarqube
+    - nginx
+tasks:
+  -name: Install softwares
+    apt: 
+      name: "{{item}}""
+      state: true
+    with_items: "{{softwarenames}}" 
+  tags:
+   - Installnginx
+  
+
+
