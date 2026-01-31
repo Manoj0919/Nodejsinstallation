@@ -20,6 +20,42 @@
         java -version
       tags:
         - install java-17
+    - name: install sonarqube
+      shell: |
+        wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-25.6.0.109173.zip
+        unzip sonarqube-25.6.0.zip
+        mv sonarqube-25.6.0.109173 /opt/sonarqube
+        useradd -r -M sonar
+        chown -R sonar:sonar /opt/sonarqube
+      tags: installation of sonarqube completed
+    - name: enable enable sonar services 
+      copy: 
+       dest: /etc/systemd/system/sonarqube.service
+       source: |
+        [Unit]
+        Description=SonarQube 25.6.0
+        After=network.target
+
+        [Service]
+        Type=forking
+        User=sonar
+        Group=sonar
+        ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
+        ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
+        LimitNOFILE=65536
+        Restart=always
+
+        [Install]
+        WantedBy=multi-user.target
+      notify: 
+        - Reload systemd
+    - name: Enable and start sonar qube services
+      service:
+       name: sonarqube
+       state: started
+       enabled: true
+
+
     - name: Installsoftwares
       package: 
         name: "{{item}}"
@@ -32,7 +68,12 @@
         name: nginx
         state: started
         enabled: true
-      tags: enable Nginx service    
+      tags: enable Nginx service  
+  handlers:
+   - name: Reload systemd 
+     systemd: 
+     daemon_reload: true  
+   
 
       
 
