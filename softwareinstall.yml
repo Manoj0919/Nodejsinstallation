@@ -22,6 +22,7 @@
         - install java-17
     - name: install sonarqube
       shell: |
+        cd /opt
         wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-25.6.0.109173.zip
         unzip sonarqube-25.6.0.zip
         mv sonarqube-25.6.0.109173 /opt/sonarqube
