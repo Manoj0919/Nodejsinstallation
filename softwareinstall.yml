@@ -24,15 +24,16 @@
       shell: |
         cd /opt
         wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-25.6.0.109173.zip
-        unzip sonarqube-25.6.0.zip
+        unzip sonarqube-25.6.0.109173.zip
         mv sonarqube-25.6.0.109173 /opt/sonarqube
         useradd -r -M sonar
         chown -R sonar:sonar /opt/sonarqube
-      tags: installation of sonarqube completed
+      tags: 
+       - installation of sonarqube completed
     - name: enable enable sonar services 
       copy: 
        dest: /etc/systemd/system/sonarqube.service
-       source: |
+       content: |
         [Unit]
         Description=SonarQube 25.6.0
         After=network.target
@@ -50,11 +51,8 @@
         WantedBy=multi-user.target
       notify: 
         - Reload systemd
-  handlers:
-    - name: Reload systemd 
-      systemd: 
-       daemon_reload: true  
-  tasks:    
+
+    
     - name: Enable and start sonar qube services
       service:
        name: sonarqube
@@ -76,7 +74,10 @@
         enabled: true
       tags: enable Nginx service  
   
-   
+  handlers:
+    - name: Reload systemd 
+      systemd: 
+       daemon_reload: true     
 
       
 
