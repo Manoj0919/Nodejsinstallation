@@ -49,6 +49,10 @@
         WantedBy=multi-user.target
       notify: 
         - Reload systemd
+      handlers:
+      - name: Reload systemd 
+        systemd: 
+        daemon_reload: true      
     - name: Enable and start sonar qube services
       service:
        name: sonarqube
@@ -69,10 +73,7 @@
         state: started
         enabled: true
       tags: enable Nginx service  
-  handlers:
-   - name: Reload systemd 
-     systemd: 
-     daemon_reload: true  
+  
    
 
       
