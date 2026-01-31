@@ -32,7 +32,7 @@
         name: nginx
         state: started
         enable: true
-      tag: enable Nginx service    
+      tags: enable Nginx service    
 
       
 
