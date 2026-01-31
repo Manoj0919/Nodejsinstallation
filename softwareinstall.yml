@@ -6,7 +6,7 @@
       - nginx
   tasks:
     - name: Installsoftwares
-      apt: 
+      package: 
         name: "{{item}}"
         state: present
       loop: "{{softwarenames}}" 
