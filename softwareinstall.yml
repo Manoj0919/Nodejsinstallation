@@ -5,13 +5,6 @@
       - git 
       - nginx
   tasks:
-    - name: Installsoftwares
-      package: 
-        name: "{{item}}"
-        state: present
-      loop: "{{softwarenames}}" 
-      tags:
-      - Installsoftwares
     - name: install-java
       shell: |
         cd /opt
@@ -26,8 +19,21 @@
 
         java -version
       tags:
-        - install java
-      
+        - install java-17
+    - name: Installsoftwares
+      package: 
+        name: "{{item}}"
+        state: present
+      loop: "{{softwarenames}}" 
+      tags:
+      - Installsoftwares
+    - name: enable nginxservices
+      service:
+        name: nginx
+        state: started
+        enable: true
+      tag: enable Nginx service    
+
       
 
 
