@@ -27,7 +27,7 @@
       loop: "{{softwarenames}}" 
       tags:
       - Installsoftwares
-    - name: enable nginxservices
+    - name: enable-nginx-services
       service:
         name: nginx
         state: started
