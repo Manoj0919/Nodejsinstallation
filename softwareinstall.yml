@@ -49,10 +49,11 @@
         WantedBy=multi-user.target
       notify: 
         - Reload systemd
-      handlers:
-      - name: Reload systemd 
-        systemd: 
-        daemon_reload: true      
+  handlers:
+    - name: Reload systemd 
+      systemd: 
+       daemon_reload: true  
+  tasks:    
     - name: Enable and start sonar qube services
       service:
        name: sonarqube
