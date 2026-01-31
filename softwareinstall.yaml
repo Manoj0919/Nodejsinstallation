@@ -1,4 +1,19 @@
 -hosts: all
 become: true
+vars:
+  
 tasks:
--name: Install Nginx
+  -name: 
+  -name: install java
+    apt:
+      name: maven
+      state: true
+  -name: InstallNginx
+    apt: 
+      name: nginx
+      state: true
+  tags:
+   - Installnginx
+  -name: start Nginx
+
+
